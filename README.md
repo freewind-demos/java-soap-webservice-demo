@@ -125,3 +125,24 @@ Content-type: text/xml; charset=utf-8
 ```
 
 可以看到，服务器端与客户端之间发送的是xml，通过一层层奇怪而复杂的包装来传递数据
+
+## 使用命令行发送请求
+
+```
+brew install httpie
+```
+
+```
+echo '<?xml version="1.0" ?><S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/"><S:Body><ns2:hello xmlns:ns2="http://server.demo/"><arg0>soap</arg0></ns2:hello></S:Body></S:Envelope>' | http POST http://localhost:1212/hello Content-type:"text/xml; charset=utf-8" Soapaction:"http://server.demo/Hello/helloRequest"
+```
+
+Get response:
+
+```
+HTTP/1.1 200 OK
+Content-type: text/xml; charset=utf-8
+Date: Thu, 07 Feb 2019 09:35:24 GMT
+Transfer-encoding: chunked
+
+<?xml version="1.0" ?><S:Envelope xmlns:S="http://schemas.xmlsoap.org/soap/envelope/"><S:Body><ns2:helloResponse xmlns:ns2="http://server.demo/"><return>Hello, soap!</return></ns2:helloResponse></S:Body></S:Envelope>
+```
